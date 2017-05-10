@@ -2,7 +2,6 @@ var express = require('express')
 var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
 var cors = require('cors')
-var Book = require('./models/book')
 
 var server = express()
 var port = 4545
@@ -32,6 +31,14 @@ server.use('/', express.static(`${__dirname}/public/`))
 
 // Above this line most are the same, execpt the connection
 
+var Schema = mongoose.Schema
+var BookSchema = new Schema({
+  title: { type: String, required: true },
+  aurthor: { type: String, required: true },
+  rating: { type: Number, default: 1 },
+  publish: { type: Number }
+})
+var Book = mongoose.model('Book', BookSchema)
 
 server.get('/', function(req, res, next) {
   res.send('You made it')
